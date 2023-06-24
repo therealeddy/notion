@@ -45,10 +45,11 @@ export function Editor({ content, onContentUpdated }: EditorProps) {
     autofocus: 'end',
     editorProps: {
       attributes: {
-        class: 'focus:outline-none prose prose-invert prose-headings:mt-0',
+        class:
+          'w-[100%] min-w-full focus:outline-none prose prose-invert prose-headings:mt-0',
       },
     },
   })
 
-  return <EditorContent className="w-[65ch]" editor={editor} />
+  return <EditorContent className="w-[100%] min-w-full" editor={editor} />
 }

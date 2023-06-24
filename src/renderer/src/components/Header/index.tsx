@@ -1,9 +1,8 @@
 import clsx from 'clsx'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { Code, CaretDoubleRight, TrashSimple } from 'phosphor-react'
-import * as Breadcrumbs from './Breadcrumbs'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Document } from '@shared/types/ipc'
 
 interface HeaderProps {
@@ -33,6 +32,14 @@ export function Header({ isSidebarOpen }: HeaderProps) {
       },
     )
 
+  const { data } = useQuery(['documents'], async () => {
+    const response = await window.api.fetchDocuments()
+
+    return response.data
+  })
+
+  const documentPage = data?.find((document) => document.id === id)
+
   return (
     <div
       id="header"
@@ -56,18 +63,14 @@ export function Header({ isSidebarOpen }: HeaderProps) {
 
       {id && (
         <>
-          <Breadcrumbs.Root>
-            <Breadcrumbs.Item>
-              <Code weight="bold" className="h-4 w-4 text-pink-500" />
-              Estrutura técnica
-            </Breadcrumbs.Item>
-            <Breadcrumbs.Separator />
-            <Breadcrumbs.HiddenItems />
-            <Breadcrumbs.Separator />
-            <Breadcrumbs.Item>Back-end</Breadcrumbs.Item>
-            <Breadcrumbs.Separator />
-            <Breadcrumbs.Item isActive>Untitled</Breadcrumbs.Item>
-          </Breadcrumbs.Root>
+          {documentPage && (
+            <div className="flex-1 overflow-hidden flex items-center">
+              <span className="inline-flex items-center gap-2 hover:text-notion-50 text-notion-50">
+                <Code weight="bold" className="h-4 w-4 text-pink-500" />
+                {documentPage.title}
+              </span>
+            </div>
+          )}
 
           <div className="inline-flex region-no-drag">
             <button
