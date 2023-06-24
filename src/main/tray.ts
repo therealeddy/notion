@@ -1,12 +1,14 @@
-import { BrowserWindow, Menu, Tray, nativeImage } from 'electron'
+import { BrowserWindow, Menu, Tray } from 'electron'
 import path from 'node:path'
 
 export function createTray(window: BrowserWindow) {
-  const icon = nativeImage.createFromPath(
-    path.resolve(__dirname, 'rotionTemplate.png'),
+  const tray = new Tray(
+    process.platform === 'linux' || process.platform === 'win32'
+      ? path.join(__dirname, '../../resources/notionTemplate.png')
+      : path.resolve(__dirname, 'notionTemplate.png'),
   )
 
-  const tray = new Tray(icon)
+  tray.setToolTip('Notion')
 
   const menu = Menu.buildFromTemplate([
     { label: 'Notion', enabled: false },

@@ -20,7 +20,7 @@ function createWindow(): void {
       y: 20,
     },
     titleBarStyle: 'hiddenInset',
-    ...(process.platform === 'linux'
+    ...(process.platform === 'linux' || process.platform === 'win32'
       ? {
           icon: path.join(__dirname, '../../build/icon.png'),
         }
