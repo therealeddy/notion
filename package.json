@@ -1,5 +1,6 @@
 {
   "name": "notion",
+  "productName": "Notion",
   "version": "1.0.0",
   "description": "A Notion alternative written with Electron",
   "main": "./out/main/index.js",
